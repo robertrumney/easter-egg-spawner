@@ -17,7 +17,7 @@ This is a Unity script that spawns Easter eggs in a random location around the p
 
 ## Dependencies
 
-This script has no external dependencies. You might want to create an EasterEgg.cs class for your eggs though!
+This script has no external dependencies. You might want to create an EasterEgg class for your eggs though!
 
 ## License
 
