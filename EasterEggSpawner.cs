@@ -57,6 +57,12 @@ public class EasterEggSpawner : MonoBehaviour
             GameObject easterEgg = Instantiate(easterEggPrefab, spawnPos, Quaternion.identity);
             easterEgg.name = "Egg";
 
+            // Make the egg a child of the egg hunt root container
+            easterEgg.transform.SetParent(this.transform);
+
+            // Add the spawned Easter egg to the list
+            spawnedEggs.Add(easterEgg);
+
             // Rotate the Easter egg to lie on the terrain surface
             if (Physics.Raycast(easterEgg.transform.position + Vector3.up * 100f, Vector3.down, out RaycastHit hit, 200f, LayerMask.GetMask("Terrain")))
             {
@@ -66,12 +72,6 @@ public class EasterEggSpawner : MonoBehaviour
                 // Set the Easter egg position to be exactly on the terrain
                 easterEgg.transform.SetPositionAndRotation(hit.point, rotation);
                 easterEgg.transform.position += hit.normal * (easterEgg.transform.localScale.y * 0.5f);
-
-                // Add the spawned Easter egg to the list
-                spawnedEggs.Add(easterEgg);
-
-                // Make the egg a child of the egg hunt root container
-                easterEgg.transform.SetParent(this.transform);
             }
 
             numEasterEggs++;
