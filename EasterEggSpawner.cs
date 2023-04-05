@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class EasterEggSpawner : MonoBehaviour
 {
@@ -56,22 +55,23 @@ public class EasterEggSpawner : MonoBehaviour
             // Spawn a random Easter egg prefab at the position
             GameObject easterEggPrefab = easterEggPrefabs[Random.Range(0, easterEggPrefabs.Count)];
             GameObject easterEgg = Instantiate(easterEggPrefab, spawnPos, Quaternion.identity);
-            easterEgg.name = ":egg:";
+            easterEgg.name = "Egg";
 
             // Rotate the Easter egg to lie on the terrain surface
-            RaycastHit hit;
-            if (Physics.Raycast(easterEgg.transform.position + Vector3.up * 100f, Vector3.down, out hit, 200f, LayerMask.GetMask("Terrain")))
+            if (Physics.Raycast(easterEgg.transform.position + Vector3.up * 100f, Vector3.down, out RaycastHit hit, 200f, LayerMask.GetMask("Terrain")))
             {
                 // Rotate the Easter egg to a jaunty angle
                 Quaternion rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                easterEgg.transform.rotation = rotation;
-
+                
                 // Set the Easter egg position to be exactly on the terrain
-                easterEgg.transform.position = hit.point;
+                easterEgg.transform.SetPositionAndRotation(hit.point, rotation);
                 easterEgg.transform.position += hit.normal * (easterEgg.transform.localScale.y * 0.5f);
 
                 // Add the spawned Easter egg to the list
                 spawnedEggs.Add(easterEgg);
+
+                // Make the egg a child of the egg hunt root container
+                easterEgg.transform.SetParent(this.transform);
             }
 
             numEasterEggs++;
