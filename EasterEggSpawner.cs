@@ -27,7 +27,7 @@ public class EasterEggSpawner : MonoBehaviour
         if (playerObj == null)
         {
             Debug.LogError("No object tagged 'Player' found in the scene!");
-            return;
+            yield break;
         }
 
         // Find all terrains in the scene
