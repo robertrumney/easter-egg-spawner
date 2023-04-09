@@ -1,5 +1,4 @@
 using UnityEngine;
-
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,17 +7,17 @@ public class EasterEggSpawner : MonoBehaviour
     public List<GameObject> easterEggPrefabs;
     public int maxEasterEggs = 500;
 
-    private int numEasterEggs;
     private List<GameObject> spawnedEggs;
-    
+    private int numEasterEggs;
+
     // Delay to allow for any save/load player re-positioning
-    private readonly int delayTime=2;
-    
+    private readonly float delayTime = 2f;
+
     // Call Start() as a coroutine on level start
     IEnumerator Start()
     {
         yield return new WaitForSeconds(delayTime);
-    
+
         numEasterEggs = 0;
         spawnedEggs = new List<GameObject>();
 
@@ -42,22 +41,16 @@ public class EasterEggSpawner : MonoBehaviour
         {
             // Generate a random position within the spawn area
             Vector3 spawnPos = spawnCenter + Random.insideUnitSphere * spawnRadius;
-            spawnPos.y = 0f;
 
-            // Check if the spawn position is on the terrain
-            bool onTerrain = false;
+            // Calculate the height of the terrain at the spawn position
+            float terrainHeight = 0f;
             foreach (Terrain terrain in terrains)
             {
-                if (terrain.terrainData.bounds.Contains(spawnPos))
-                {
-                    onTerrain = true;
-                    break;
-                }
+                terrainHeight = Mathf.Max(terrain.SampleHeight(spawnPos), terrainHeight);
             }
-            if (!onTerrain)
-            {
-                continue; // Skip this iteration of the while loop
-            }
+
+            // Offset the y-coordinate of the spawn position to be above the terrain surface
+            spawnPos.y = terrainHeight + 0.1f;
 
             // Spawn a random Easter egg prefab at the position
             GameObject easterEggPrefab = easterEggPrefabs[Random.Range(0, easterEggPrefabs.Count)];
@@ -69,17 +62,6 @@ public class EasterEggSpawner : MonoBehaviour
 
             // Add the spawned Easter egg to the list
             spawnedEggs.Add(easterEgg);
-
-            // Rotate the Easter egg to lie on the terrain surface
-            if (Physics.Raycast(easterEgg.transform.position + Vector3.up * 100f, Vector3.down, out RaycastHit hit, 200f, LayerMask.GetMask("Terrain")))
-            {
-                // Rotate the Easter egg to a jaunty angle
-                Quaternion rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-                
-                // Set the Easter egg position to be exactly on the terrain
-                easterEgg.transform.SetPositionAndRotation(hit.point, rotation);
-                easterEgg.transform.position += hit.normal * (easterEgg.transform.localScale.y * 0.5f);
-            }
 
             numEasterEggs++;
         }
