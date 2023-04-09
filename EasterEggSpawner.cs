@@ -8,10 +8,15 @@ public class EasterEggSpawner : MonoBehaviour
 
     private int numEasterEggs;
     private List<GameObject> spawnedEggs;
-
-    // Start is called before the first frame update
-    void Start()
+    
+    // Delay to allow for any save/load player re-positioning
+    private readonly int delayTime=2;
+    
+    // Call Start() as a coroutine on level start
+    IEnumerator Start()
     {
+        yield return new WaitForSeconds(delayTime);
+    
         numEasterEggs = 0;
         spawnedEggs = new List<GameObject>();
 
