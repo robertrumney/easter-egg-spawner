@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class EasterEggSpawner : MonoBehaviour
 {
     public List<GameObject> easterEggPrefabs;
-    public int maxEasterEggs;
+    public int maxEasterEggs = 500;
 
     private int numEasterEggs;
     private List<GameObject> spawnedEggs;
