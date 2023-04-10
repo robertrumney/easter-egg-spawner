@@ -10,7 +10,7 @@ public class EasterEggSpawner : MonoBehaviour
     private List<GameObject> spawnedEggs;
     private int numEasterEggs;
 
-    // Delay to allow for any save/load player re-positioning
+    // Delay to allow for any player repositioning
     private readonly float delayTime = 2f;
 
     // Call Start() as a coroutine on level start
