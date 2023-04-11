@@ -1,14 +1,15 @@
 using UnityEngine;
+
 using System.Collections;
 using System.Collections.Generic;
 
 public class EasterEggSpawner : MonoBehaviour
 {
-    public List<GameObject> easterEggPrefabs;
-    public int maxEasterEggs = 500;
-
-    private List<GameObject> spawnedEggs;
     private int numEasterEggs;
+    public int maxEasterEggs = 500;
+    
+    private List<GameObject> spawnedEggs;
+    public List<GameObject> easterEggPrefabs;
 
     // Delay to allow for any player repositioning
     private readonly float delayTime = 2f;
@@ -62,7 +63,8 @@ public class EasterEggSpawner : MonoBehaviour
 
             // Add the spawned Easter egg to the list
             spawnedEggs.Add(easterEgg);
-
+            
+            // Increment total eggs spawned counter
             numEasterEggs++;
         }
     }
