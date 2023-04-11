@@ -35,7 +35,7 @@ public class EasterEggSpawner : MonoBehaviour
 
         // Calculate the spawn area as a sphere around the player
         Vector3 spawnCenter = playerObj.transform.position;
-        float spawnRadius = 1000f;
+        float spawnRadius = 500f;
 
         // Spawn Easter eggs until the maximum number is reached
         while (numEasterEggs < maxEasterEggs)
